@@ -1,7 +1,7 @@
 # **Power Platform Governance – PowerShell Scripts**
 
 ## Identify Orphaned Dataverse for Teams Environments  
-### 📜 Powershell Script: DetectOrphanedTeamsEnvAzureResource.ps1
+### 📜 Powershell Script: [DetectOrphanedTeamsEnvAzureResource.ps1](DetectOrphanedTeamsEnvAzureResource.ps1)
 This script connects to **Azure**, **Microsoft Teams**, and the **Power Platform Administration API** to identify **orphaned Dataverse for Teams environments**—those that remain in the tenant but are no longer linked to an active Microsoft Team or whose environment owner has left the company.
 
 It is intended for **Power Platform administrators** and **Center of Excellence (CoE)** teams who need visibility and cleanup insights for Teams‑based Power Platform assets.
