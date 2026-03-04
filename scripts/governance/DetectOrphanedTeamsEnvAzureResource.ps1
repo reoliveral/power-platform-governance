@@ -1,4 +1,4 @@
-﻿
+
 <#
 .SYNOPSIS
     Identify Orphaned Dataverse for Teams Environments
@@ -31,8 +31,6 @@ Import-Module MicrosoftTeams
 Install-Module -Name Microsoft.PowerApps.Administration.PowerShell -Scope CurrentUser
 Import-Module Microsoft.PowerApps.Administration.PowerShell 
 
-$WarningPreference = 'SilentlyContinue'
-
 try {
     # Connect to Azure Subscription
     Write-Host "Establishing connection to Azure Subscription..." -ForegroundColor Blue
@@ -43,7 +41,9 @@ try {
     # Set-AzContext -Subscription "<subscriptionguid>"
       
    # Apply a filter for Dataverse for Teams environments
-    $teamsEnvironments = Search-AzGraph -Query "PowerPlatformResources | where type == 'microsoft.powerplatform/environments' | where properties.environmentType == 'Teams'"
+    $teamsEnvironments = Search-AzGraph -Query "PowerPlatformResources | where type == 'microsoft.powerplatform/environments' 
+                                                                       | where properties.environmentType == 'Teams' 
+                                                                       | project name, location, properties.displayName, properties.createdAt"
 
    # Condition to check whether any Dataverse for Teams environments have been detected
     if (-not $teamsEnvironments) {
