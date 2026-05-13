@@ -45,31 +45,24 @@ If the principal type is tenant, the connection was shared with all users in the
 ### Scope to specific environments (by display name or ID)
 .\Get-AllConnectionsAndPermissions.ps1 -EnvironmentFilter "54c030e3-ee4d-e188-b519-71baf285ac19"
 
+## Identify all custom connectors and specify the permissions associated with each connection and environment.
+### 📜 Powershell Script: [Get-AllCustomConnectorsAndSharedConnections.ps1](Get-AllCustomConnectorsAndSharedConnections.ps1)
+This script connects to **Power Platform Administration API** to identify **custom connectors and permissions**.
+If the principal type is tenant, the connection was shared with all users in the tenant.
+
+**Usage examples:**
+### Run against all environments
+.\Get-AllCustomConnectorsAndSharedConnections.ps1
+
+### Export to CSV
+.\Get-AllCustomConnectorsAndSharedConnections.ps1 -OutputCsvPath "C:\reports\connections.csv"
+
+### Scope to specific environments (by display name or ID)
+.\Get-AllCustomConnectorsAndSharedConnections.ps1 -EnvironmentFilter "54c030e3-ee4d-e188-b519-71baf285ac19"
+
 This is designed for **Power Platform administrators** and **Center of Excellence (CoE)** teams who require insight into connections and sharing details.
 
-### 📄 What the Script Does
 
-The script correlates data from three sources:
-
-1. **Azure Resource Graph**  
-   Uses a **Kusto Query Language (KQL) query** to retrieve Power Platform environment metadata from Azure, including:
-   - Environment ID
-   - Environment type (Dataverse for Teams)
-
-2. **Microsoft Teams PowerShell**  
-   Retrieves the list of existing Teams in the tenant to determine:
-   - Active Teams
-   - Team IDs (Group IDs)
-   - Deleted or missing Teams
-
-3. **Power Platform Administration PowerShell**  
-   Retrieves environment‑level metadata, including:
-   - Environment display name
-   - Environment type
-   - Dataverse for Teams linkage
-   - Creation and ownership context
-
-By correlating these datasets, the script identifies **Dataverse for Teams environments in cases where the related Team has been removed or the Teams group no longer has an owner**.
 ---
 ### 🔧 Prerequisites
 PowerShell 7+ (recommended) or Windows PowerShell 5.1.  
