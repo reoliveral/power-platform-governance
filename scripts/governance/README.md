@@ -74,7 +74,7 @@ If the principal type is tenant, the connection was shared with all users in the
 
 This is designed for **Power Platform administrators** and **Center of Excellence (CoE)** teams who require insight into connections and sharing details.
 
-## Identify All Connections and Specify the Permissions Associated with Each Connection and Environment
+## Artifacts and the Access Permissions for Each Environment
 
 ### 📜 PowerShell Script: [Invoke-PPEnvironmentAccessAudit.ps1](./Invoke-PPEnvironmentAccessAudit.ps1)
 
