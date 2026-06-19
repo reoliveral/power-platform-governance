@@ -37,13 +37,19 @@ If the principal type is tenant, the connection was shared with all users in the
 
 **Usage examples:**
 ### Run against all environments
+```
 .\Get-AllConnectionsAndPermissions.ps1
+```
 
 ### Export to CSV
+```
 .\Get-AllConnectionsAndPermissions.ps1 -OutputCsvPath "C:\reports\connections.csv"
+```
 
 ### Scope to specific environments (by display name or ID)
+```
 .\Get-AllConnectionsAndPermissions.ps1 -EnvironmentFilter "54c030e3-ee4d-e188-b519-71baf285ac19"
+```
 
 ## Identify all custom connectors and specify the permissions associated with each connection and environment.
 ### 📜 Powershell Script: [Get-AllCustomConnectorsAndSharedConnections.ps1](Get-AllCustomConnectorsAndSharedConnections.ps1)
@@ -52,16 +58,120 @@ If the principal type is tenant, the connection was shared with all users in the
 
 **Usage examples:**
 ### Run against all environments
+```
 .\Get-AllCustomConnectorsAndSharedConnections.ps1
+```
 
 ### Export to CSV
+```
 .\Get-AllCustomConnectorsAndSharedConnections.ps1 -OutputCsvPath "C:\reports\connections.csv"
+```
 
 ### Scope to specific environments (by display name or ID)
+```
 .\Get-AllCustomConnectorsAndSharedConnections.ps1 -EnvironmentFilter "54c030e3-ee4d-e188-b519-71baf285ac19"
+```
 
 This is designed for **Power Platform administrators** and **Center of Excellence (CoE)** teams who require insight into connections and sharing details.
 
+## Identify All Connections and Specify the Permissions Associated with Each Connection and Environment
+
+### 📜 PowerShell Script: [Invoke-PPEnvironmentAccessAudit.ps1](./Invoke-PPEnvironmentAccessAudit.ps1)
+
+This script connects to **Power Platform Administration**, **Microsoft Graph**, and optionally **Dataverse** to inventory the users, groups, service accounts, and tenant-wide shares that have access to resources in a single Power Platform environment.
+
+It is intended for **Power Platform administrators**, **environment owners**, and **Center of Excellence (CoE)** teams who need to understand who has access to apps, flows, connections, custom connectors, Dataverse security roles, Copilot Studio agents, and environment-related resources before applying security-group based environment access controls.
+
+### 📄 What the Script Does
+
+The script audits one Power Platform environment at a time and produces CSV reports that can be reviewed with business owners before restricting environment access.
+
+The script collects access information from the following sources:
+
+1. **Power Platform Canvas Apps**  
+   Retrieves canvas apps in the selected environment and identifies:
+   - App owners
+   - Role assignments
+   - Users with access
+   - Groups with access
+   - Apps shared with the entire tenant
+
+2. **Power Automate Cloud Flows**  
+   Retrieves cloud flows in the selected environment and identifies:
+   - Flow creators
+   - Flow owners and co-owners
+   - User-based ownership
+   - Group-based ownership
+
+3. **Power Platform Connections**  
+   Retrieves connections in the environment and identifies:
+   - Connection owners
+   - Service accounts that own connections
+   - User accounts whose connections may keep flows running
+
+4. **Custom Connectors**  
+   Retrieves custom connectors in the environment and identifies:
+   - Connector owners
+   - User accounts responsible for custom connector access
+
+5. **Microsoft Graph Group Expansion**  
+   When the `-ExpandGroups` switch is used, the script resolves discovered Entra ID groups and retrieves:
+   - Transitive group members
+   - Member display names
+   - Member user principal names
+   - Group-to-user access relationships
+
+6. **Dataverse Security Roles**  
+   When the `-IncludeDataverse` switch is used, the script queries Dataverse and identifies:
+   - Users with at least one Dataverse security role
+   - Owner teams and access teams with security roles
+   - Entra ID group-backed teams with security roles
+   - Team members who inherit Dataverse access through team membership
+
+7. **Copilot Studio Agents**  
+   When Dataverse auditing is enabled, the script also identifies:
+   - Copilot Studio agent owners
+   - Users and groups each agent is shared with
+   - Shared principals retrieved from Dataverse access records
+
+8. **Solution Cloud Flows**  
+   When Dataverse auditing is enabled, the script retrieves solution-aware cloud flows from the Dataverse workflow table and identifies:
+   - Solution cloud flow owners
+   - User ownership records
+   - Unresolved team or owner references
+
+### 📁 Output Files
+
+The script creates an output folder for the selected environment and generates the following CSV files:
+
+1. **UserAccess_Detail.csv**  
+   Contains every artifact-level access record discovered by the script.
+
+2. **UserAccess_Summary.csv**  
+   Contains one row per distinct principal with a summary of why that user, group, or service account has access.
+
+3. **TenantWideShares.csv**  
+   Lists apps or resources that are shared with the entire tenant.
+
+4. **GroupsEncountered.csv**  
+   Lists all Entra ID groups discovered during the audit.
+
+5. **GroupMembers.csv**  
+   Lists transitive user members of discovered groups when `-ExpandGroups` is used.
+
+6. **UnresolvedPrincipals.csv**  
+   Lists object IDs that could not be resolved through Microsoft Graph or Dataverse.
+
+7. **SecurityGroupSeed_<environment>.csv**  
+   Generates an Entra ID bulk-import ready list of user principal names that can be used to seed a security group for the environment.
+
+**Usage examples:**
+```powershell
+.\Invoke-PPEnvironmentAccessAudit.ps1 `
+    -EnvironmentId "5f04367c-0b4d-e9cb-8685-f3a9ecc5cf22" `
+    -IncludeDataverse `
+    -ExpandGroups
+```
 
 ---
 ### 🔧 Prerequisites
