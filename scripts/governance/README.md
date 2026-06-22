@@ -30,6 +30,7 @@ The script correlates data from three sources:
 
 By correlating these datasets, the script identifies **Dataverse for Teams environments in cases where the related Team has been removed or the Teams group no longer has an owner**.
 
+---
 ## Identify all connections and specify the permissions associated with each connection and environment.
 ### 📜 Powershell Script: [Get-AllConnectionsAndPermissions.ps1](Get-AllConnectionsAndPermissions.ps1)
 This script connects to **Power Platform Administration API** to identify **connections and permissions**.
@@ -50,7 +51,7 @@ If the principal type is tenant, the connection was shared with all users in the
 ```
 .\Get-AllConnectionsAndPermissions.ps1 -EnvironmentFilter "54c030e3-ee4d-e188-b519-71baf285ac19"
 ```
-
+---
 ## Identify all custom connectors and specify the permissions associated with each connection and environment.
 ### 📜 Powershell Script: [Get-AllCustomConnectorsAndSharedConnections.ps1](Get-AllCustomConnectorsAndSharedConnections.ps1)
 This script connects to **Power Platform Administration API** to identify **custom connectors and permissions**.
@@ -74,6 +75,7 @@ If the principal type is tenant, the connection was shared with all users in the
 
 This is designed for **Power Platform administrators** and **Center of Excellence (CoE)** teams who require insight into connections and sharing details.
 
+---
 ## Artifacts and the Access Permissions for Each Environment
 
 ### 📜 PowerShell Script: [Invoke-PPEnvironmentAccessAudit.ps1](./Invoke-PPEnvironmentAccessAudit.ps1)
