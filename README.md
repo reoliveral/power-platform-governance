@@ -46,6 +46,7 @@ This library is open-source and is not a Microsoft-provided resource. As a resul
 .
 ├── scripts/
 │   ├── governance/
+│   ├── licensing/
 ├── README.md
 └── LICENSE
 ```
