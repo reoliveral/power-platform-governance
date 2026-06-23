@@ -1,5 +1,5 @@
 
-## Identify Apps Using Per-App Licensing in Power Platform.
+## Identify Apps Using Per-App Licensing in Power Platform
 
 ### 📜 PowerShell Script: [Get-PerAppLicensedApps.ps1](Get-PerAppLicensedApps.ps1)
 
